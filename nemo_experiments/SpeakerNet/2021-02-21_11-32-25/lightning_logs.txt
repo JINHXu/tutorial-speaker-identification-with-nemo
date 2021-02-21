@@ -1,0 +1,18 @@
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores
+
+  | Name         | Type                              | Params
+-------------------------------------------------------------------
+0 | preprocessor | AudioToMelSpectrogramPreprocessor | 0     
+1 | encoder      | ConvASREncoder                    | 3.2 M 
+2 | decoder      | SpeakerDecoder                    | 1.8 M 
+3 | loss         | CrossEntropyLoss                  | 0     
+4 | _accuracy    | TopKClassificationAccuracy        | 0     
+Epoch 0: val_loss reached 6.11847 (best 6.11847), saving model to /Users/xujinghua/speaker-reco/nemo_experiments/SpeakerNet/2021-02-21_11-32-25/checkpoints/SpeakerNet---val_loss=6.12-epoch=0.ckpt as top 3
+Epoch 1: val_loss reached 18.31602 (best 6.11847), saving model to /Users/xujinghua/speaker-reco/nemo_experiments/SpeakerNet/2021-02-21_11-32-25/checkpoints/SpeakerNet---val_loss=18.32-epoch=1.ckpt as top 3
+Epoch 2: val_loss reached 26.95935 (best 6.11847), saving model to /Users/xujinghua/speaker-reco/nemo_experiments/SpeakerNet/2021-02-21_11-32-25/checkpoints/SpeakerNet---val_loss=26.96-epoch=2.ckpt as top 3
+Epoch 3: val_loss was not in top 3
+Epoch 4: val_loss was not in top 3
+Saving latest checkpoint...
+GPU available: False, used: False
+TPU available: False, using: 0 TPU cores

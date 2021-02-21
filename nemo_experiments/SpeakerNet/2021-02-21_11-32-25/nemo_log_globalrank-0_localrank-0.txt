@@ -1,0 +1,230 @@
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.AudioToCharDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.AudioToBPEDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.AudioLabelDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text._TarredAudioToTextDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.TarredAudioToCharDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.TarredAudioToBPEDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:24 experimental:28] Module <class 'nemo.collections.asr.losses.ctc.CTCLoss'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:24 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text_dali.AudioToCharDALIDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:25 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/torchaudio/backend/utils.py:54: UserWarning: "sox" backend is being deprecated. The default backend will be changed to "sox_io" backend in 0.8.0 and "sox" backend will be removed in 0.9.0. Please migrate to "sox_io" backend. Please refer to https://github.com/pytorch/audio/issues/903 for the detail.
+      '"sox" backend is being deprecated. '
+    
+[NeMo W 2021-02-21 11:32:25 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/omegaconf/basecontainer.py:232: UserWarning: cfg.pretty() is deprecated and will be removed in a future version.
+    Use OmegaConf.to_yaml(cfg)
+    
+      category=UserWarning,
+    
+[NeMo I 2021-02-21 11:32:25 train_spkreco_model:69] Hydra config: name: SpeakerNet
+    sample_rate: 16000
+    repeat: 2
+    dropout: 0.5
+    separable: true
+    n_filters: 512
+    model:
+      train_ds:
+        manifest_filepath: /Users/xujinghua/speaker-reco/data/train.json
+        sample_rate: 16000
+        labels: null
+        batch_size: 64
+        shuffle: true
+        time_length: 8
+        is_tarred: false
+        tarred_audio_filepaths: null
+        tarred_shard_strategy: scatter
+      validation_ds:
+        manifest_filepath: /Users/xujinghua/speaker-reco/data/dev.json
+        sample_rate: 16000
+        labels: null
+        batch_size: 128
+        shuffle: false
+        time_length: 8
+      test_ds:
+        manifest_filepath: /Users/xujinghua/speaker-reco/data/test_jxu.json
+        sample_rate: 16000
+        labels: null
+        batch_size: 1
+        shuffle: false
+        time_length: 8
+        embedding_dir: .
+      preprocessor:
+        _target_: nemo.collections.asr.modules.AudioToMelSpectrogramPreprocessor
+        normalize: per_feature
+        window_size: 0.02
+        sample_rate: 16000
+        window_stride: 0.01
+        window: hann
+        features: 64
+        n_fft: 512
+        frame_splicing: 1
+        dither: 1.0e-05
+        stft_conv: false
+      encoder:
+        _target_: nemo.collections.asr.modules.ConvASREncoder
+        feat_in: 64
+        activation: relu
+        conv_mask: true
+        jasper:
+        - filters: 512
+          repeat: 1
+          kernel:
+          - 3
+          stride:
+          - 1
+          dilation:
+          - 1
+          dropout: 0.5
+          residual: true
+          separable: true
+        - filters: 512
+          repeat: 2
+          kernel:
+          - 7
+          stride:
+          - 1
+          dilation:
+          - 1
+          dropout: 0.5
+          residual: true
+          separable: true
+        - filters: 512
+          repeat: 2
+          kernel:
+          - 11
+          stride:
+          - 1
+          dilation:
+          - 1
+          dropout: 0.5
+          residual: true
+          separable: true
+        - filters: 512
+          repeat: 2
+          kernel:
+          - 15
+          stride:
+          - 1
+          dilation:
+          - 1
+          dropout: 0.5
+          residual: true
+          separable: true
+        - filters: 1500
+          repeat: 1
+          kernel:
+          - 1
+          stride:
+          - 1
+          dilation:
+          - 1
+          dropout: 0.0
+          residual: false
+          separable: true
+      decoder:
+        _target_: nemo.collections.asr.modules.SpeakerDecoder
+        feat_in: 1500
+        num_classes: 75
+        pool_mode: xvector
+        emb_sizes: 512,512
+        angular: false
+      loss:
+        scale: 30
+        margin: 0.2
+      optim:
+        name: novograd
+        lr: 0.006
+        args:
+          name: auto
+          betas:
+          - 0.95
+          - 0.5
+          weight_decay: 0.001
+        sched:
+          name: CosineAnnealing
+          iters_per_batch: 1
+          max_steps: null
+          args:
+            name: auto
+            warmup_steps: null
+            warmup_ratio: 0.1
+            min_lr: 0.0
+            last_epoch: -1
+    trainer:
+      gpus: 0
+      max_epochs: 5
+      max_steps: null
+      num_nodes: 1
+      accelerator: null
+      accumulate_grad_batches: 1
+      amp_level: O0
+      deterministic: true
+      checkpoint_callback: false
+      logger: false
+      log_every_n_steps: 1
+      val_check_interval: 1.0
+    exp_manager:
+      exp_dir: null
+      name: SpeakerNet
+      create_tensorboard_logger: true
+      create_checkpoint_callback: true
+    
+[NeMo I 2021-02-21 11:32:25 exp_manager:183] Experiments will be logged at /Users/xujinghua/speaker-reco/nemo_experiments/SpeakerNet/2021-02-21_11-32-25
+[NeMo I 2021-02-21 11:32:25 exp_manager:519] TensorboardLogger has been set up
+[NeMo W 2021-02-21 11:32:25 exp_manager:562] trainer had a weights_save_path of cwd(). This was ignored.
+[NeMo I 2021-02-21 11:32:25 collections:256] Filtered duration for loading collection is 0.000000.
+[NeMo I 2021-02-21 11:32:25 collections:259] # 864 files loaded accounting to # 75 labels
+[NeMo I 2021-02-21 11:32:25 audio_to_label:97] Timelength considered for collate func is 8
+[NeMo I 2021-02-21 11:32:25 collections:256] Filtered duration for loading collection is 0.000000.
+[NeMo I 2021-02-21 11:32:25 collections:259] # 97 files loaded accounting to # 75 labels
+[NeMo I 2021-02-21 11:32:25 audio_to_label:97] Timelength considered for collate func is 8
+[NeMo I 2021-02-21 11:32:25 collections:256] Filtered duration for loading collection is 0.000000.
+[NeMo I 2021-02-21 11:32:25 collections:259] # 6 files loaded accounting to # 1 labels
+[NeMo I 2021-02-21 11:32:25 audio_to_label:97] Timelength considered for collate func is 8
+[NeMo I 2021-02-21 11:32:25 features:241] PADDING: 16
+[NeMo I 2021-02-21 11:32:25 features:258] STFT using torch
+[NeMo I 2021-02-21 11:32:26 label_models:89] Training with Softmax-CrossEntropy loss
+[NeMo I 2021-02-21 11:32:26 modelPT:597] Optimizer config = Novograd (
+    Parameter Group 0
+        amsgrad: False
+        betas: [0.95, 0.5]
+        eps: 1e-08
+        grad_averaging: False
+        lr: 0.006
+        weight_decay: 0.001
+    )
+[NeMo I 2021-02-21 11:32:26 lr_scheduler:562] Scheduler "<nemo.core.optim.lr_scheduler.CosineAnnealing object at 0x15435d080>" 
+    will be used during training (effective maximum steps = 70) - 
+    Parameters : 
+    (last_epoch: -1
+    warmup_steps: null
+    warmup_ratio: null
+    min_lr: 0.0
+    max_steps: 70
+    )
+[NeMo W 2021-02-21 11:32:26 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 4 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+      warnings.warn(*args, **kwargs)
+    
+[NeMo W 2021-02-21 11:32:29 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/torch/functional.py:516: UserWarning: stft will require the return_complex parameter be explicitly  specified in a future PyTorch release. Use return_complex=False  to preserve the current behavior or return_complex=True to return  a complex output. (Triggered internally at  ../aten/src/ATen/native/SpectralOps.cpp:653.)
+      normalized, onesided, return_complex)
+    
+[NeMo W 2021-02-21 11:32:29 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/torch/functional.py:516: UserWarning: The function torch.rfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.fft or torch.fft.rfft. (Triggered internally at  ../aten/src/ATen/native/SpectralOps.cpp:590.)
+      normalized, onesided, return_complex)
+    
+[NeMo I 2021-02-21 11:32:41 label_models:211] val_loss: 4.316
+[NeMo W 2021-02-21 11:32:41 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The validation_epoch_end should not return anything as of 9.1.to log, use self.log(...) or self.write(...) directly in the LightningModule
+      warnings.warn(*args, **kwargs)
+    
+[NeMo W 2021-02-21 11:32:41 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The dataloader, train dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 4 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+      warnings.warn(*args, **kwargs)
+    
+[NeMo I 2021-02-21 11:38:18 label_models:211] val_loss: 6.118
+[NeMo I 2021-02-21 11:43:35 label_models:211] val_loss: 18.316
+[NeMo I 2021-02-21 11:49:08 label_models:211] val_loss: 26.959
+[NeMo I 2021-02-21 11:54:28 label_models:211] val_loss: 27.341
+[NeMo I 2021-02-21 11:59:37 label_models:211] val_loss: 27.188
+[NeMo W 2021-02-21 11:59:39 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The dataloader, test dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 4 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+      warnings.warn(*args, **kwargs)
+    
+[NeMo I 2021-02-21 11:59:41 label_models:244] test_loss: 29.712
+[NeMo W 2021-02-21 11:59:41 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The testing_epoch_end should not return anything as of 9.1.to log, use self.log(...) or self.write(...) directly in the LightningModule
+      warnings.warn(*args, **kwargs)
+    

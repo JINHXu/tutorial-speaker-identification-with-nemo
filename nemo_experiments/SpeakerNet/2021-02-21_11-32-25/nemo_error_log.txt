@@ -1,0 +1,38 @@
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.AudioToCharDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.AudioToBPEDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.AudioLabelDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text._TarredAudioToTextDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.TarredAudioToCharDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:16 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text.TarredAudioToBPEDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:24 experimental:28] Module <class 'nemo.collections.asr.losses.ctc.CTCLoss'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:24 experimental:28] Module <class 'nemo.collections.asr.data.audio_to_text_dali.AudioToCharDALIDataset'> is experimental, not ready for production and is not fully supported. Use at your own risk.
+[NeMo W 2021-02-21 11:32:25 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/torchaudio/backend/utils.py:54: UserWarning: "sox" backend is being deprecated. The default backend will be changed to "sox_io" backend in 0.8.0 and "sox" backend will be removed in 0.9.0. Please migrate to "sox_io" backend. Please refer to https://github.com/pytorch/audio/issues/903 for the detail.
+      '"sox" backend is being deprecated. '
+    
+[NeMo W 2021-02-21 11:32:25 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/omegaconf/basecontainer.py:232: UserWarning: cfg.pretty() is deprecated and will be removed in a future version.
+    Use OmegaConf.to_yaml(cfg)
+    
+      category=UserWarning,
+    
+[NeMo W 2021-02-21 11:32:25 exp_manager:562] trainer had a weights_save_path of cwd(). This was ignored.
+[NeMo W 2021-02-21 11:32:26 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The dataloader, val dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 4 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+      warnings.warn(*args, **kwargs)
+    
+[NeMo W 2021-02-21 11:32:29 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/torch/functional.py:516: UserWarning: stft will require the return_complex parameter be explicitly  specified in a future PyTorch release. Use return_complex=False  to preserve the current behavior or return_complex=True to return  a complex output. (Triggered internally at  ../aten/src/ATen/native/SpectralOps.cpp:653.)
+      normalized, onesided, return_complex)
+    
+[NeMo W 2021-02-21 11:32:29 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/torch/functional.py:516: UserWarning: The function torch.rfft is deprecated and will be removed in a future PyTorch release. Use the new torch.fft module functions, instead, by importing torch.fft and calling torch.fft.fft or torch.fft.rfft. (Triggered internally at  ../aten/src/ATen/native/SpectralOps.cpp:590.)
+      normalized, onesided, return_complex)
+    
+[NeMo W 2021-02-21 11:32:41 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The validation_epoch_end should not return anything as of 9.1.to log, use self.log(...) or self.write(...) directly in the LightningModule
+      warnings.warn(*args, **kwargs)
+    
+[NeMo W 2021-02-21 11:32:41 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The dataloader, train dataloader, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 4 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+      warnings.warn(*args, **kwargs)
+    
+[NeMo W 2021-02-21 11:59:39 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The dataloader, test dataloader 0, does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` (try 4 which is the number of cpus on this machine) in the `DataLoader` init to improve performance.
+      warnings.warn(*args, **kwargs)
+    
+[NeMo W 2021-02-21 11:59:41 nemo_logging:349] /Users/xujinghua/miniconda3/lib/python3.7/site-packages/pytorch_lightning/utilities/distributed.py:45: UserWarning: The testing_epoch_end should not return anything as of 9.1.to log, use self.log(...) or self.write(...) directly in the LightningModule
+      warnings.warn(*args, **kwargs)
+    
