@@ -10,12 +10,12 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import recall_score
 # import numpy as np
 
-path_infer = './data/test_128_shuffle_5_infer.json'
+path_infer = './data/test_infer.json'
 
 with open(path_infer, 'r') as handle:
     data = [json.loads(line) for line in handle]
 
-    labels = ['Milad', 'Markus', 'Jinghua']
+    labels = ['s1', 's2', 's3']
 
     y_true = []
     y_pred = []
