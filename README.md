@@ -7,7 +7,7 @@
 2. Configration
 
 * change from [default config](https://github.com/JINHXu/NeMo/blob/main/examples/speaker_recognition/conf/SpeakerNet_recognition_3x2x512.yaml)
-* [documentations & instruction](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/speaker_recognition/configs.html#)
+* [documentations & instructions](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/speaker_recognition/configs.html#)
 
 
 3. Fine-tune `SpeakerNet`
@@ -17,7 +17,7 @@
 
 4. Inference
 
-* [inference](https://github.com/NVIDIA/NeMo/blob/main/examples/speaker_recognition/speaker_reco_infer.py)
+* [script](https://github.com/NVIDIA/NeMo/blob/main/examples/speaker_recognition/speaker_reco_infer.py)
 
 
 (5. Evaluation)
