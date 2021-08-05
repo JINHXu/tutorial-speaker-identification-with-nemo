@@ -1,4 +1,13 @@
-# Speaker Identification with `Nemo` tutorial
+# TUTORIAL: Speaker Identification with `Nemo` 
+
+A tutorial on how to do speaker identification on your own data with NVIDIA's `Nemo`
+
+0. Record your own data of speakers intended to be identified
+
+* preprocess into intended format
+* slice into around 4 seconds audio samples
+
+_Recommended tool `pydub`_
 
 1. Data Prep (generate train, dev, test manifests)
 
@@ -10,14 +19,16 @@
 * [documentations & instructions](https://docs.nvidia.com/deeplearning/nemo/user-guide/docs/en/main/asr/speaker_recognition/configs.html#)
 
 
-3. Fine-tune `SpeakerNet`
+3. Fine-tune `SpeakerNet` on data of speakers intended to be identified
 
-* [script](https://github.com/NVIDIA/NeMo/blob/main/examples/speaker_recognition/speaker_reco_finetune.py)
+* [pre-trained model](https://ngc.nvidia.com/catalog/models/nvidia:nemo:speakerrecognition_speakernet)
+
+* fine tune [script](https://github.com/NVIDIA/NeMo/blob/main/examples/speaker_recognition/speaker_reco_finetune.py)
  
 
 4. Inference
 
-* [script](https://github.com/NVIDIA/NeMo/blob/main/examples/speaker_recognition/speaker_reco_infer.py)
+* inference [script](https://github.com/NVIDIA/NeMo/blob/main/examples/speaker_recognition/speaker_reco_infer.py)
 
 
 (5. Evaluation)
