@@ -2,6 +2,13 @@
 
 A comprehensible and quick illustration on how to do speaker identification on your own data with NVIDIA's `Nemo`
 
+1. record data
+2. data prep
+3. config
+4. fine tune
+5. inference
+6. evaluation
+
 ## Record your own data of speakers intended to be identified
 
 * preprocess into intended format
